@@ -1,0 +1,148 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>[1]Leetcode#13Roman to Integer的分析、尝试与解答 | PD Edu Studio | Math pro and programming</title>
+
+  
+  <meta name="author" content="PD">
+  
+
+  
+  <meta name="description" content="A site for math and programming education on kids">
+  
+
+  
+  
+  <meta name="keywords" content="">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="[1]Leetcode#13Roman to Integer的分析、尝试与解答"/>
+
+  <meta property="og:site_name" content="PD Edu Studio"/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="PD Edu Studio" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+</head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">PD Edu Studio</a>
+    </h1>
+    <p class="site-description">Math pro and programming</p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>[1]Leetcode#13Roman to Integer的分析、尝试与解答</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2017/05/30/1-Leetcode-13Roman-to-Integer的分析、尝试与解答/" rel="bookmark">
+        <time class="entry-date published" datetime="2017-05-30T05:46:49.000Z">
+          2017-05-30
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>#[1]Leetcode#13Roman to Integer的分析、尝试与解答</p>
+<p>因为最近才再一次的回到代码世界中来，所以我决定不要一口吃成胖子，上来就挑战hard模式。<br>我知道很多人都会这样想“反正要学，先学最难的，后面就简单了”，如果无论多么难的问题你都能顺利的并且毫无挫败感的解决的话，这就是“先苦后甜”的良好习惯的完美实践，然而，人类就是喜欢这样美化自己的真正初衷。其实我们期望的是通过比较短的痛苦时间来完成一项工作。巧的是，当我们并不真心的去求一样东西，通常都不能得到这种东西。比方说，你真的用尽各种手段去赚钱的话，通常都会载在某一个点上。而通常想偷个懒，走个捷径，通常会连入门都做不到。原因很简单，我们并没有按照客观的学习路径来学习。一开始就上最困难的内容，会让我们对学习材料不知所云，还会严重打击自己的积极性。<br>对，这就是为什么，我决定先刷Leetcode中的Easy题目（人类就是这样，总是给自己的决定找借口:p）</p>
+<hr>
+<p>##罗马数字转换成整数<br>今天遇到的题目是</p>
+<blockquote>
+<p>Given a roman numeral, convert it to an integer. Input is guaranteed to be within the range from 1 to 3999.<br>将罗马数字转换成整数。</p>
+</blockquote>
+<p>因为我并不知道准确的罗马数字系统的书写规则，所以首先wikipedia了一下。找到了3条有用的规则：</p>
+<ol>
+<li>Symbols are placed from left to right in order of value, starting with the largest. 数字都是按照从大到小顺序排列。</li>
+<li>阅读这个数只用把它所有的数字代表的值相加。</li>
+<li>有些情况用两个字母代表一个数字，这个数字左边的字母数要小于右边字母数。这个数的值是右边数字减去左边数字。</li>
+</ol>
+<p>也就是说数分两类</p>
+<ol>
+<li>只有一个字母代表的数</li>
+<li>两个字母代表的数</li>
+</ol>
+<p>##清晰的表述<br>划分到每一个字母，如果它右边的字母比它小或者等于它，那这就是一个单字母数；如果右边的字母比它大，就是一个双字母数，要把它右边的字母也看成一个数字。把每一个识别出来的数字全部加在一起就是转换出来的整数。</p>
+<p>但是看到后面，wikipedia说，上面的规则是$标准$的还有那种不标准的。</p>
+<blockquote>
+<p>“Double subtractives” also occur, such as XIIX or even IIXX instead of XVIII for “18”.</p>
+</blockquote>
+<p>$$这还能不能愉快的玩耍了!$$<br>我决定先忽略这种Double subtractives的形式。<br>先把标准形式的罗马数字转化了。</p>
+<p>于是我写下了如下代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * @param &#123;string&#125; s</div><div class="line"> * @return &#123;number&#125;</div><div class="line"> */</div><div class="line"></div><div class="line">var RomanChar = &#123;</div><div class="line">  &apos;I&apos;:1, &apos;V&apos;:5, &apos;X&apos;:10, &apos;L&apos;:50, &apos;C&apos;:100, &apos;D&apos;:500, &apos;M&apos;:1000 </div><div class="line">&#125;;</div><div class="line"></div><div class="line">var romanToInt = function(s) &#123;</div><div class="line">  var result = 0;</div><div class="line">  var i;</div><div class="line">  for (i = 0; i &lt; s.length; i++) &#123;</div><div class="line">    if (i + 1 &lt; s.length) &#123;</div><div class="line">      if (RomanChar[s[i]] &gt;= RomanChar[s[i+1]]) &#123;</div><div class="line">        result += RomanChar[s[i]]</div><div class="line">      &#125; else &#123;</div><div class="line">        result += RomanChar[s[i+1]] - RomanChar[s[i]];</div><div class="line">        i++;</div><div class="line">      &#125;</div><div class="line">    &#125; else &#123;</div><div class="line">      //the last char</div><div class="line">      result += RomanChar[s[i]];</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  return result;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>然后就通过了，囧！看来非标准的罗马数字的规则不够优美，连官方也嫌弃啊。很好，那我也跟着嫌弃一下！</p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2017 PD
+    
+  </p>
+</footer>
+    
+  </div>
+</div>
+</body>
+</html>
