@@ -1,0 +1,142 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>[2]Leetcode#38Count-and-say尝试解答 | PD Edu Studio | Math pro and programming</title>
+
+  
+  <meta name="author" content="PD">
+  
+
+  
+  <meta name="description" content="A site for math and programming education on kids">
+  
+
+  
+  
+  <meta name="keywords" content="">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="[2]Leetcode#38Count-and-say尝试解答"/>
+
+  <meta property="og:site_name" content="PD Edu Studio"/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="PD Edu Studio" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+</head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">PD Edu Studio</a>
+    </h1>
+    <p class="site-description">Math pro and programming</p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>[2]Leetcode#38Count-and-say尝试解答</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2017/05/31/2-Leetcode-38Count-and-say尝试解答/" rel="bookmark">
+        <time class="entry-date published" datetime="2017-05-31T15:40:59.000Z">
+          2017-05-31
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>#[2]Leetcode#38Count-and-say尝试解答</p>
+<p>连续刷了好些题目，但是没什么存在感。因为过程实在太简单，基本都只有一个twist就完了。<br>晚上刷了一个有一点点意思的题目</p>
+<blockquote>
+<p>The count-and-say sequence is the sequence of integers beginning as follows: 1, 11, 21, 1211, 111221, …</p>
+<p>1 is read off as “one 1” or 11.<br>11 is read off as “two 1s” or 21.<br>21 is read off as “one 2, then one 1” or 1211.<br>Given an integer n, generate the nth sequence.</p>
+<p>Note: The sequence of integers will be represented as a string.</p>
+</blockquote>
+<p>这个题目有一定误导性，我看到有些人在leetcode上评论说，题目看错啦。<br>题目是要你以1作为第一个元素，然后依次往下处理，一个1，写作11，然后往下处理11，两个1，写作21，以此类推。很多人（包括我）一开始以为是给定了一个数字n，以n作为第一个元素开始处理。然而这是不对的。题目要求你以1作为第一个元素，一直往下处理n-1次之后，得到的那个字符串返回输出。</p>
+<p>唯一值得注意的是每一次处理的过程，也就是要数几个几然后制作成字符串的过程。<br>过程我后来想了想是这样</p>
+<ol>
+<li>有一个依次遍历原来字符串（我把所有数字全部转化成了字符串，在javascript里面，这不是难事）所有元素的index，写作i</li>
+<li>有一个记录前一个元素的值的变量，写作curChar</li>
+<li>有一个记录当前元素出现了多少次的变量，写作count</li>
+<li>有一个记录结果的字符串变量result，初始化result = “”</li>
+<li>对于字符串里每一个字符，只有两种状态，一种当前字符跟前一个字符相同，这个时候count++就行；一种当前字符跟前一个字符不同，这个时候把count变成字符串和curChar链接在一起，把得到的这个字符串链接在result后面。</li>
+</ol>
+<p><code>有一个需要注意的地方，如果输入的字符串只有一个元素的时候，需要单独处理。并且上述的遍历我们可以在循环外面处理完第一个元素，然后在循环内从index为1的地方开始遍历，这样就不会发生访问第一个元素前一个元素这种事件了（防止了index越界）</code></p>
+<p>所以整体解答如下，我先写了一个函数countSay来把一个字符串，比如说‘1112’按要求变换成下一个形态’3112’，然后主函数countAndSay来把‘1’重复n-1次这个过程即可。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * @param &#123;number&#125; n</div><div class="line"> * @return &#123;string&#125;</div><div class="line">*/</div><div class="line"> </div><div class="line">var countSay = function(str) &#123;</div><div class="line">  if (str.length == 1) &#123;</div><div class="line">    return &apos;1&apos; + str;</div><div class="line">  &#125;</div><div class="line">  var curChar = str[0];</div><div class="line">  var i = 1, count = 1;</div><div class="line">  var result = &apos;&apos;;</div><div class="line">  for (i = 1; i &lt; str.length; i++) &#123;</div><div class="line">    if (str[i] == curChar) &#123;</div><div class="line">      count++;</div><div class="line"></div><div class="line">    &#125; else &#123;</div><div class="line">      result += &apos;&apos; + count + curChar;</div><div class="line">      curChar = str[i];</div><div class="line">      count = 1;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">  &#125;</div><div class="line">  result += &apos;&apos; + count + curChar;</div><div class="line">  return result;</div><div class="line"></div><div class="line">&#125;;</div><div class="line"></div><div class="line">var countAndSay = function(n) &#123;</div><div class="line">  var result = &apos;&apos; + 1;</div><div class="line">  var i = 0;</div><div class="line">  for (i = 0; i &lt; n - 1; i++) &#123;</div><div class="line">    result = countSay(result);</div><div class="line"></div><div class="line">  &#125;</div><div class="line">  return result;</div><div class="line"></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>然后就过了<br>小插曲是粘贴一段代码，结果粘贴错了位置，导致了一点bug，不过洗完澡就改好了。</p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2017 PD
+    
+  </p>
+</footer>
+    
+  </div>
+</div>
+</body>
+</html>
