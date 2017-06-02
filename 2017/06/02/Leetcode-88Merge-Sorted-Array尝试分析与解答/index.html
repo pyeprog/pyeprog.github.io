@@ -1,0 +1,131 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Leetcode#88Merge Sorted Array尝试分析与解答 | PD Edu Studio | Math pro and programming</title>
+
+  
+  <meta name="author" content="PD">
+  
+
+  
+  <meta name="description" content="A site for math and programming education on kids">
+  
+
+  
+  
+  <meta name="keywords" content="">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="Leetcode#88Merge Sorted Array尝试分析与解答"/>
+
+  <meta property="og:site_name" content="PD Edu Studio"/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="PD Edu Studio" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+</head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">PD Edu Studio</a>
+    </h1>
+    <p class="site-description">Math pro and programming</p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>Leetcode#88Merge Sorted Array尝试分析与解答</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2017/06/02/Leetcode-88Merge-Sorted-Array尝试分析与解答/" rel="bookmark">
+        <time class="entry-date published" datetime="2017-06-02T02:51:46.000Z">
+          2017-06-02
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>#[4]Leetcode#88Merge Sorted Array尝试分析与解答</p>
+<p>又刷了一些easy难度的题目，感觉意思不大，所以就不写出来了。<br>早上刷了一题，消耗了点时间。</p>
+<blockquote>
+<p>Given two sorted integer arrays nums1 and nums2, merge nums2 into nums1 as one sorted array.</p>
+<p>Note:<br>You may assume that nums1 has enough space (size that is greater or equal to m + n) to hold additional elements from nums2. The number of elements initialized in nums1 and nums2 are m and n respectively.</p>
+</blockquote>
+<p>以前做过一个merge sorted array但是array是用链表的组织的，使用链表的话，插入和删除的时间复杂度是O(1)，所以直接遍历两个列表，然后依次把链表的元素拆下来拼在一起就可以啦。<br>但是，这一次的array是线性表。线性表插入和删除的时间复杂度是O(n)，所以最差情况下这道题的时间复杂度是O(n^2)。<br><strong>当然，我们怎么允许这种事情发生</strong><br>因为题目要求我们把第二个线性表融合到第一个里面去，而且还注明，第一个线性表的容量很大。所以我们可以先把第一个线性表原来的内容先挪到尾部，然后再依次开始融合，现在的时间复杂度就变成O(n)了。</p>
+<p>但是我在挪的过程中犯了一个错误，把第一个线性表后面的内容挪到前面去了，挪反了，结果导致了好几次wrong answer。<br>嗷嗷，因为今天勇士对骑士总决赛呀。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * @param &#123;number[]&#125; nums1</div><div class="line"> * @param &#123;number&#125; m</div><div class="line"> * @param &#123;number[]&#125; nums2</div><div class="line"> * @param &#123;number&#125; n</div><div class="line"> * @return &#123;void&#125; Do not return anything, modify nums1 in-place instead.</div><div class="line"> */</div><div class="line">var merge = function(nums1, m, nums2, n) &#123;</div><div class="line">  var k;</div><div class="line">  for (k = 0; k &lt; m; k++) &#123;</div><div class="line">    nums1[nums1.length - 1 - k] = nums1[m - 1 - k];</div><div class="line"></div><div class="line">  &#125;</div><div class="line">  var i = nums1.length - m, j = 0;</div><div class="line">  k = 0;</div><div class="line">  while (i &lt; nums1.length &amp;&amp; j &lt; n) &#123;</div><div class="line">    if (nums1[i] &lt; nums2[j]) &#123;</div><div class="line">      nums1[k] = nums1[i];</div><div class="line">      i++;</div><div class="line"></div><div class="line">    &#125; else &#123;</div><div class="line">      nums1[k] = nums2[j];</div><div class="line">      j++;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">    k++;</div><div class="line"></div><div class="line"></div><div class="line">  &#125;</div><div class="line"></div><div class="line">  while (i &lt; nums1.length) &#123;</div><div class="line">    nums1[k] = nums1[i];</div><div class="line">    k++;</div><div class="line">    i++;</div><div class="line"></div><div class="line">  &#125;</div><div class="line">  while (j &lt; n) &#123;</div><div class="line">    nums1[k] = nums2[j];</div><div class="line">    k++;</div><div class="line">    j++;</div><div class="line"></div><div class="line">  &#125;</div><div class="line"></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2017 PD
+    
+  </p>
+</footer>
+    
+  </div>
+</div>
+</body>
+</html>
