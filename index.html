@@ -61,6 +61,66 @@
 
   
     
+    <h3 class="article-title"><a href="/2017/06/04/5-Leetcode-107Binary-Tree-Level-Order-Traversal-II尝试解答/"><span>[5]Leetcode#107Binary Tree Level Order Traversal II尝试解答</span></a></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2017/06/04/5-Leetcode-107Binary-Tree-Level-Order-Traversal-II尝试解答/" rel="bookmark">
+        <time class="entry-date published" datetime="2017-06-03T16:57:06.000Z">
+          2017-06-04
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>#[5]Leetcode#107Binary Tree Level Order Traversal II尝试解答</p>
+<p>今天是一周中最忙的两天之一，我就是会在别人放假的时候忙啊。所以就是真是忙到没朋友。朋友们都是放假有时间。<br>今天刷过的一题是跟树的操作有关系。一开始我还以为给了一个线性表作为树呢，心中一阵窃喜，嘻嘻，线性表形式的完全树表达，好简单啊。<br>到最后一看，还是老样子，给的是root节点。</p>
+<p>层次遍历肯定要用到队列的吧。书上是这么教的，但是真的吗？<br>为什么要用到队列你知道吗？<br>现在写代码有一种感觉，不要遵从书上要你做的事情，问问你自己为什么要这样做。刘未鹏写过一篇文章叫做算法为什么这么难学。他把算法比做一种难以理解的菜谱。如果从具体代码层面来看算法的确就是如此。但是我现在是打算从数学层面来看代码，果然有不一样的视野。<br>题目如下：</p>
+<blockquote>
+<p>Given a binary tree, return the bottom-up level order traversal of its nodes’ values. (ie, from left to right, level by level from leaf to root).</p>
+<p>For example:<br>Given binary tree <code>[3,9,20,null,null,15,7]</code>,</p>
+</blockquote>
+<p>  3<br>  / \<br>    9  20<br>    _<em>/  \
+      </em> 15   7</p>
+<blockquote>
+<p>return its bottom-up level order traversal as:<br>      [<br>        [15,7],<br>        [9,20],<br>        [3]</p>
+</blockquote>
+<pre><code>]
+</code></pre><p>我觉得用不着使用队列，如果强行要用，反而会更麻烦。你只需要分析清楚。这一层需要处理的节点和下一层需要处理的节点。怎么通过这一层生成下一层。<br>想清楚之后，就无比好写了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Definition for a binary tree node.</div><div class="line"> * function TreeNode(val) &#123;</div><div class="line"> *     this.val = val;</div><div class="line"> *     this.left = this.right = null;</div><div class="line"> * </div><div class="line"> &#125;</div><div class="line"> */</div><div class="line">/**</div><div class="line"> * @param &#123;TreeNode&#125; root</div><div class="line"> * @return &#123;number[][]&#125;</div><div class="line"> */</div><div class="line">var levelOrderBottom = function(root) &#123;</div><div class="line">  var result = [];</div><div class="line">  var curLevel = [];</div><div class="line">  if (root) &#123;</div><div class="line">    curLevel.push(root);</div><div class="line"></div><div class="line">  &#125;</div><div class="line">  var i;</div><div class="line">  while (curLevel.length) &#123;</div><div class="line">    var nextLevel = [];</div><div class="line">    var curValues = [];</div><div class="line">    for (i = 0; i &lt; curLevel.length; i++) &#123;</div><div class="line">      curValues.push(curLevel[i].val);</div><div class="line">      if (curLevel[i].left) &#123;</div><div class="line">        nextLevel.push(curLevel[i].left);</div><div class="line"></div><div class="line">      &#125;</div><div class="line">      if (curLevel[i].right) &#123;</div><div class="line">        nextLevel.push(curLevel[i].right);</div><div class="line"></div><div class="line">      &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">    if (curValues.length === 0) &#123;</div><div class="line">      break;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">    result.splice(0, 0, curValues);</div><div class="line">    curLevel = nextLevel;</div><div class="line"></div><div class="line">  &#125;</div><div class="line">  return result;</div><div class="line"></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+
+
+  <article>
+
+  
+    
     <h3 class="article-title"><a href="/2017/06/02/Leetcode-88Merge-Sorted-Array尝试分析与解答/"><span>Leetcode#88Merge Sorted Array尝试分析与解答</span></a></h3>
     
   
