@@ -1,0 +1,134 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>[6]Leetcode#108Convert Sorted Array to Binary Search Tree尝试解答 | PD Edu Studio | Math pro and programming</title>
+
+  
+  <meta name="author" content="PD">
+  
+
+  
+  <meta name="description" content="A site for math and programming education on kids">
+  
+
+  
+  
+  <meta name="keywords" content="">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="[6]Leetcode#108Convert Sorted Array to Binary Search Tree尝试解答"/>
+
+  <meta property="og:site_name" content="PD Edu Studio"/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="PD Edu Studio" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+</head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">PD Edu Studio</a>
+    </h1>
+    <p class="site-description">Math pro and programming</p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>[6]Leetcode#108Convert Sorted Array to Binary Search Tree尝试解答</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2017/06/04/6-Leetcode-108Convert-Sorted-Array-to-Binary-Search-Tree尝试解答/" rel="bookmark">
+        <time class="entry-date published" datetime="2017-06-04T15:10:02.000Z">
+          2017-06-04
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>#[6]Leetcode#108Convert Sorted Array to Binary Search Tree尝试解答</p>
+<p>今天上了一天课，应该说，今天教了一天课（对，我是老师）。算是又过了一周。真是每到周末，就觉得超级难搞啊～</p>
+<p>今天的题目又跟树有关系。还不是一般的树，而是（平衡的）查找二叉树。</p>
+<blockquote>
+<p>Given an array where elements are sorted in ascending order, convert it to a height balanced BST.</p>
+</blockquote>
+<p>给的是一个线性表，需要返回的是BST的根结点。<br>比方说一个线性表，我们应该选取哪一个作为根结点呢？</p>
+<p>e.g.<br>[2, 3, 5, 7, 8, 9]<br>应该选取哪个作为根结点呢？选择7哦。<br>然后根结点的左子树，应该由[2, 3, 5]生成，根结点右子树应该由[8, 9]生成。</p>
+<p>好了，这个该怎么用index来表现呢？<br>一般来说，我们用head指向第一个元素，用tail指向最后一个元素后一个元素。</p>
+<p>根结点的index是什么呢？是head + Math.floor((tail-head)/2)。<br>然后我翻了一个错误。<br>正常来说，左子树的列表应该是[head, head+Math.floor((tail-head)/2)]，但是我写成了head+Math.floor((tail-head)/2)-1。为什么这样错了呢？因为[head, head+Math.floor((tail-head)/2)]是不包含head+Math.floor((tail-head)/2)的。</p>
+<p>右子树的列表应该是[head + Math.floor((tail - head) / 2) + 1, tail]</p>
+<p>代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Definition for a binary tree node.</div><div class="line"> * function TreeNode(val) &#123;</div><div class="line"> *     this.val = val;</div><div class="line"> *     this.left = this.right = null;</div><div class="line"> * </div><div class="line"> &#125;</div><div class="line"> */</div><div class="line">/**</div><div class="line"> * @param &#123;number[]&#125; nums</div><div class="line"> * @return &#123;TreeNode&#125;</div><div class="line"> */</div><div class="line"></div><div class="line">var arrayToBST = function(nums, head, tail) &#123;</div><div class="line">  if (head &gt;= tail) &#123;</div><div class="line">    return null;</div><div class="line"></div><div class="line">  &#125;</div><div class="line">  var root = new TreeNode(nums[head + Math.floor((tail - head) / 2)]);</div><div class="line">  root.left = arrayToBST(nums, head, head + Math.floor((tail - head) / 2));</div><div class="line">  root.right = arrayToBST(nums, head + Math.floor((tail - head) / 2) + 1, tail);</div><div class="line">  return root;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">var sortedArrayToBST = function(nums) &#123;</div><div class="line">  return arrayToBST(nums, 0, nums.length);</div><div class="line"></div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2017 PD
+    
+  </p>
+</footer>
+    
+  </div>
+</div>
+</body>
+</html>
