@@ -47,9 +47,9 @@
   <nav class="site-navigation">
     <ul>
       
-        <li><a href="/">主页</a></li>
+        <li><a href="/">Home</a></li>
       
-        <li><a href="/archives">归档</a></li>
+        <li><a href="/archives">Archives</a></li>
       
     </ul>
   </nav>
@@ -57,6 +57,66 @@
 
     <main class="site-main posts-loop">
     
+  <article>
+
+  
+    
+    <h3 class="article-title"><a href="/2017/06/08/8-Leetcode-189Rotate-Array的尝试分析与解答/"><span>[8]Leetcode#189Rotate Array的尝试分析与解答</span></a></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2017/06/08/8-Leetcode-189Rotate-Array的尝试分析与解答/" rel="bookmark">
+        <time class="entry-date published" datetime="2017-06-08T01:58:22.000Z">
+          2017-06-08
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <h1 id="8-Leetcode-189Rotate-Array的尝试分析与解答"><a href="#8-Leetcode-189Rotate-Array的尝试分析与解答" class="headerlink" title="[8]Leetcode#189Rotate Array的尝试分析与解答"></a>[8]Leetcode#189Rotate Array的尝试分析与解答</h1><p>这是一道诡异的题目，我至少提交了4-5Wrong answer才有点明白这道题目说什么。</p>
+<blockquote>
+<p>Rotate an array of <em>n</em> elements to the right by <em>k</em> steps.</p>
+<p>For example, with <em>n</em> = 7 and <em>k</em> = 3, the array <code>[1,2,3,4,5,6,7]</code> is rotated to <code>[5,6,7,1,2,3,4]</code>.</p>
+</blockquote>
+<p>我之前以为是把左边开始数的k+1个元素移动到右端。后来又以为是吧右端k个元素移动到左端。后来发现，其实都不是。</p>
+<p>其实相当于把整个array的最后一个元素移动到第一个元素去就行了。</p>
+<p>在做的时候遇到了一点小小的情况，代码中没有写while，而是只写了个if就提交了。还有就是有时候会有k&gt;n的情况出现。这个时候该如何处理。</p>
+<p>Naive的方式就是一个一个来了，把这些元素要么一个一个从尾巴上拔下来，然后按到第一的位置。<code>但是想一想，插入线性表时间复杂度可是O(n)啊</code>。这样算法的时间复杂度是O(nk)</p>
+<p>还有就是利用其他的Array来做，生成一个新的Array，最后再赋值给nums</p>
+<p>这里有一个很好的性质<br>$$<br>C=[AB], then \overline{\overline{A} \cdot \overline{B}}=BA<br>$$<br>如果移动了k次之后，A这一部分subarray到了末尾，B这一部分到了开头。</p>
+<p>按照这个性质。先把A整个调换一下顺序，再把B也这样做，最后把全部Array整个调换一下顺序，就把AB变成了BA，这样就就完成任务啦。</p>
+<p>有一种情况说k大于n怎么办。其实如果移动n次的话，array是保持不变的，也就是每移动n次都不变，现在那把<br>$$<br>k=k\, \bmod\, n<br>$$<br>就可以啦，这样保证k比n小，并且这样结果也是一样的。</p>
+<p>代码如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">* @param &#123;number[]&#125; nums</div><div class="line">* @param &#123;number&#125; k</div><div class="line">* @return &#123;void&#125; Do not return anything, modify nums in-place instead.</div><div class="line">*/</div><div class="line"></div><div class="line"><span class="keyword">var</span> reverse = <span class="function"><span class="keyword">function</span>(<span class="params">nums, head, tail</span>) </span>&#123;</div><div class="line"><span class="keyword">if</span> (head &gt;= tail) &#123;</div><div class="line"><span class="keyword">return</span> ;</div><div class="line"></div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> ex;</div><div class="line"><span class="keyword">if</span> (<span class="number">0</span> &lt;= head &amp;&amp; tail &lt;= nums.length) &#123;</div><div class="line"><span class="keyword">while</span> (head &lt; tail) &#123;</div><div class="line">ex = nums[head];</div><div class="line">nums[head] = nums[tail<span class="number">-1</span>];</div><div class="line">nums[tail<span class="number">-1</span>] = ex;</div><div class="line">head++;</div><div class="line">tail--;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">var</span> rotate = <span class="function"><span class="keyword">function</span>(<span class="params">nums, k</span>) </span>&#123;</div><div class="line"><span class="keyword">if</span> (k &gt; <span class="number">0</span>) &#123;</div><div class="line">k = k % nums.length;</div><div class="line">reverse(nums, nums.length - k, nums.length);</div><div class="line">reverse(nums, <span class="number">0</span>, nums.length - k);</div><div class="line">reverse(nums, <span class="number">0</span>, nums.length);</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+
+
   <article>
 
   
@@ -637,63 +697,11 @@
 
 
 
-  <article>
-
-  
-    
-    <h3 class="article-title"><a href="/2017/05/15/hello-world/"><span>Hello World</span></a></h3>
-    
-  
-
-  <div class="article-top-meta">
-    <span class="posted-on">
-      <a href="/2017/05/15/hello-world/" rel="bookmark">
-        <time class="entry-date published" datetime="2017-05-15T01:50:45.000Z">
-          2017-05-15
-        </time>
-      </a>
-    </span>
-  </div>
-
-
-  
-
-  <div class="article-content">
-    <div class="entry">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-      
-    </div>
-
-  </div>
-
-  <div class="article-footer">
-    <div class="article-meta pull-left">
-
-    
-
-    
-
-    </div>
-
-    
-  </div>
-</article>
-
-
-
 
 <nav class="pagination">
   
+  
+  <a href="/page/2/" class="pagination-next">Next</a>
   
 </nav>
     </main>
