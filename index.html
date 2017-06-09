@@ -61,6 +61,59 @@
 
   
     
+    <h3 class="article-title"><a href="/2017/06/09/9-Leetcode-190Reverse-Bits尝试分析与解答/"><span>[9]Leetcode#190Reverse Bits尝试分析与解答</span></a></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2017/06/09/9-Leetcode-190Reverse-Bits尝试分析与解答/" rel="bookmark">
+        <time class="entry-date published" datetime="2017-06-09T14:41:02.000Z">
+          2017-06-09
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <h1 id="9-Leetcode-190Reverse-Bits尝试分析与解答"><a href="#9-Leetcode-190Reverse-Bits尝试分析与解答" class="headerlink" title="[9]Leetcode#190Reverse Bits尝试分析与解答"></a>[9]Leetcode#190Reverse Bits尝试分析与解答</h1><p>这一题主要考验对bit的操作能力</p>
+<blockquote>
+<p>Reverse bits of a given 32 bits unsigned integer.</p>
+<p>For example, given input 43261596 (represented in binary as 00000010100101000001111010011100), return 964176192 (represented in binary as 00111001011110000010100101000000).</p>
+</blockquote>
+<p>总之，我要拿到一个32位整数的第i位，还要能够设定这个整数第i位的值，这一题就好做了</p>
+<p>虽然做出了正确的答案，但是最后要求输出无符号整数，因为用的是javascript，所以在输出无符号整数上又墨迹了好一会儿</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * @param &#123;number&#125; n - a positive integer</div><div class="line"> * @return &#123;number&#125; - a positive integer</div><div class="line"> */</div><div class="line"></div><div class="line">var setBit = function(n, i, val) &#123;</div><div class="line">  if (val) &#123;</div><div class="line">    n = n | (1 &lt;&lt; i);</div><div class="line"></div><div class="line">  &#125; else &#123;</div><div class="line">    n = n &amp; (~(1 &lt;&lt; i));</div><div class="line"></div><div class="line">  &#125;</div><div class="line">  return n;</div><div class="line"></div><div class="line">&#125;;</div><div class="line"></div><div class="line">var reverseBits = function(n) &#123;</div><div class="line">  var i;</div><div class="line">  var leftv, rightV;</div><div class="line">  for (i = 0; i &lt; 16; i++) &#123;</div><div class="line">    rightV = (1 &lt;&lt; i) &amp; n;</div><div class="line">    leftV = (1 &lt;&lt; (31 - i)) &amp; n;</div><div class="line">    n = setBit(n, i, leftV);</div><div class="line">    n = setBit(n, 31-i, rightV);</div><div class="line"></div><div class="line">  &#125;</div><div class="line">  return n &gt;&gt;&gt; 0;</div><div class="line"></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+
+
+  <article>
+
+  
+    
     <h3 class="article-title"><a href="/2017/06/08/8-Leetcode-189Rotate-Array的尝试分析与解答/"><span>[8]Leetcode#189Rotate Array的尝试分析与解答</span></a></h3>
     
   
@@ -627,55 +680,6 @@
 </ol>
 <p>于是代码就写出来了：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * @param &#123;number&#125; x</div><div class="line"> * @return &#123;boolean&#125;</div><div class="line"> */</div><div class="line">var isPalindrome = function(x) &#123;</div><div class="line">    if (x &lt; 0) &#123;</div><div class="line">        return false;</div><div class="line">    &#125;</div><div class="line">    var i = 0;</div><div class="line">    while (x / Math.pow(10, i) &gt;= 1) &#123;</div><div class="line">        i++;</div><div class="line">    &#125;</div><div class="line">    var highestDigit, lowestDigit;</div><div class="line">    while (x &amp;&amp; i &gt; 0) &#123;</div><div class="line">        highestDigit = Math.floor(x / Math.pow(10, i-1));</div><div class="line">        lowestDigit = x % 10;</div><div class="line">        if (highestDigit != lowestDigit) &#123;</div><div class="line">            return false;</div><div class="line">        &#125;</div><div class="line">        x -= highestDigit * Math.pow(10, i-1);</div><div class="line">        x = Math.floor(x / 10);</div><div class="line">        i -= 2;</div><div class="line">    &#125;</div><div class="line">    return true;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
 <p>这样的回文判断纯属不能使用额外空间的选择。我记得有一种使用stack的回文判断。希望你能想起来。</p>
-
-      
-    </div>
-
-  </div>
-
-  <div class="article-footer">
-    <div class="article-meta pull-left">
-
-    
-
-    
-
-    </div>
-
-    
-  </div>
-</article>
-
-
-
-  <article>
-
-  
-    
-    <h3 class="article-title"><a href="/2017/05/16/A-New-Day/"><span>A New Day</span></a></h3>
-    
-  
-
-  <div class="article-top-meta">
-    <span class="posted-on">
-      <a href="/2017/05/16/A-New-Day/" rel="bookmark">
-        <time class="entry-date published" datetime="2017-05-16T12:28:31.000Z">
-          2017-05-16
-        </time>
-      </a>
-    </span>
-  </div>
-
-
-  
-
-  <div class="article-content">
-    <div class="entry">
-      
-        <blockquote>
-<p>这是我使用Hexo搭建的静态网站，我喜欢简单的东西，正好Hexo又足够简单，Gitpage也足够简单，两者加在一起，给我了一个很方便的方案让我搭建自己的个人博客。</p>
-</blockquote>
-<p>不过这也只能算是充分条件，算不上必要条件。真正让我来写东西的动力是，我想把自己的日子收拾干净。日子毕竟是有限的。</p>
 
       
     </div>
